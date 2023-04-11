@@ -3,8 +3,8 @@ const User = ({ user, onDelete }) => {
     <tr>
       <td>{user.name}</td>
       <td>
-        {user.qualities.map((quality, index) => (
-          <span key={index} className={`badge me-1 bg-${quality.color}`}>{quality.name}</span>
+        {user.qualities.map((quality) => (
+          <span key={quality._id} className={`badge me-1 bg-${quality.color}`}>{quality.name}</span>
         ))}
       </td>
       <td>{user.profession.name}</td>
