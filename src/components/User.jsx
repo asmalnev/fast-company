@@ -20,6 +20,7 @@ const User = ({
       <td>{profession.name}</td>
       <td>{completedMeetings}</td>
       <td>{rate} /5</td>
+      <td>123</td>
       <td>
         <button onClick={() => onDelete(_id)} className="btn btn-danger">
           delete
