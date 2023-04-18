@@ -1,3 +1,5 @@
+import QualitiesList from "./QualitiesList";
+
 const User = ({
   _id,
   name,
@@ -11,11 +13,7 @@ const User = ({
     <tr>
       <td>{name}</td>
       <td>
-        {qualities.map((item) => (
-          <span className={"badge m-1 bg-" + item.color} key={item._id}>
-            {item.name}
-          </span>
-        ))}
+        <QualitiesList qualities={qualities} />
       </td>
       <td>{profession.name}</td>
       <td>{completedMeetings}</td>
