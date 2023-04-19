@@ -1,3 +1,5 @@
+import Bookmark from "./Bookmark";
+
 const User = ({
   _id,
   name,
@@ -5,7 +7,9 @@ const User = ({
   profession,
   completedMeetings,
   rate,
+  bookmark,
   onDelete,
+  onToggleBookmark,
 }) => {
   return (
     <tr>
@@ -20,7 +24,13 @@ const User = ({
       <td>{profession.name}</td>
       <td>{completedMeetings}</td>
       <td>{rate} /5</td>
-      <td>123</td>
+      <td>
+        <Bookmark
+          id={_id}
+          onToggleBookmark={onToggleBookmark}
+          status={bookmark}
+        />
+      </td>
       <td>
         <button onClick={() => onDelete(_id)} className="btn btn-danger">
           delete
