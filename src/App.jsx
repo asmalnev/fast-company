@@ -10,10 +10,22 @@ const App = () => {
     setUsers(users.filter((user) => user._id !== userId));
   };
 
+  const handleToggleBookmark = (userId) => {
+    setUsers((prevState) =>
+      prevState.map((user) =>
+        user._id === userId ? { ...user, bookmark: !user.bookmark } : user
+      )
+    );
+  };
+
   return (
     <>
       <SearchStatus userCount={users.length} />
-      <Users users={users} onDelete={handleDelete} />
+      <Users
+        users={users}
+        onDelete={handleDelete}
+        onToggleBookmark={handleToggleBookmark}
+      />
     </>
   );
 };
