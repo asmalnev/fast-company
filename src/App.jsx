@@ -1,7 +1,7 @@
-import { useState } from "react";
-import api from "./api";
-import Users from "./components/users";
-import SearchStatus from "./components/SearchStatus";
+import React, { useState } from 'react';
+import api from './api';
+import SearchStatus from './components/SearchStatus';
+import UsersList from './components/UsersList';
 
 const App = () => {
   const [users, setUsers] = useState(api.users.fetchAll());
@@ -21,7 +21,7 @@ const App = () => {
   return (
     <>
       <SearchStatus userCount={users.length} />
-      <Users
+      <UsersList
         users={users}
         onDelete={handleDelete}
         onToggleBookmark={handleToggleBookmark}
