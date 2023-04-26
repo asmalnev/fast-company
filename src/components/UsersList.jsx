@@ -33,7 +33,7 @@ const UsersList = ({ users: allUsers, ...rest }) => {
   };
 
   const filteredUsers = selectedProf
-    ? allUsers.filter((user) => user.profession === selectedProf)
+    ? allUsers.filter((user) => user.profession._id === selectedProf._id)
     : allUsers;
 
   const usersLength = filteredUsers.length;
