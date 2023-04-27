@@ -21,8 +21,7 @@ const GroupList = ({
             onItemSelect={onItemSelect}
           />
         ))
-      : typeof items === 'object'
-      ? Object.values(items).map((item) => (
+      : Object.values(items).map((item) => (
           <GroupItem
             key={item[keyProperty]}
             item={item}
@@ -31,8 +30,7 @@ const GroupList = ({
             selectedItem={selectedItem}
             onItemSelect={onItemSelect}
           />
-        ))
-      : null}
+        ))}
   </ul>
 );
 

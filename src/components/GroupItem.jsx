@@ -1,13 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const GroupItem = ({
-  item,
-  keyProperty,
-  valueProperty,
-  selectedItem,
-  onItemSelect
-}) => {
+const GroupItem = ({ item, valueProperty, selectedItem, onItemSelect }) => {
   return (
     <li
       className={'list-group-item' + (item === selectedItem ? ' active' : '')}
@@ -21,7 +15,6 @@ const GroupItem = ({
 
 GroupItem.propTypes = {
   item: PropTypes.object.isRequired,
-  keyProperty: PropTypes.string.isRequired,
   valueProperty: PropTypes.string.isRequired,
   selectedItem: PropTypes.object,
   onItemSelect: PropTypes.func.isRequired
