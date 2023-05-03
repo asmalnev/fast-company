@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from './api';
-import UsersList from './components/UsersList';
+import Users from './components/Users';
 
 const App = () => {
   const [users, setUsers] = useState();
@@ -24,7 +24,7 @@ const App = () => {
   return (
     <>
       {users && (
-        <UsersList
+        <Users
           users={users}
           onDelete={handleDelete}
           onToggleBookmark={handleToggleBookmark}

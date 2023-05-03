@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import api from '../api';
 import SearchStatus from './SearchStatus';
 import Pagination from './Pagination';
-import User from './User';
+import UsersTable from './UsersTable';
 import GroupList from './GroupLIst';
 import { paginate } from '../utils/paginate';
-import PropTypes from 'prop-types';
-import api from '../api';
 
-const UsersList = ({ users: allUsers, ...rest }) => {
-  const usersOnPage = 2;
+const Users = ({ users: allUsers, ...rest }) => {
+  const usersOnPage = 8;
 
   const [currentPage, setCurrentPage] = useState(1);
 
   const [professions, setProfessions] = useState();
 
   const [selectedProf, setSelectedProf] = useState();
+
+  const [sortBy, setSortBy] = useState[{ iter: 'name', order: 'asc' }];
 
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProfessions(data));
@@ -32,13 +35,19 @@ const UsersList = ({ users: allUsers, ...rest }) => {
     setSelectedProf(item);
   };
 
+  const handleSort = (item) => {
+    setSortBy({ iter: item, order: 'asc' });
+  };
+
   const filteredUsers = selectedProf
     ? allUsers.filter((user) => user.profession._id === selectedProf._id)
     : allUsers;
 
   const usersLength = filteredUsers.length;
 
-  const usersCrop = paginate(filteredUsers, currentPage, usersOnPage);
+  const sortedUsers = _.orderBy(filteredUsers, [sortBy.iter], [sortBy.order]);
+
+  const usersCrop = paginate(sortedUsers, currentPage, usersOnPage);
 
   const clearFilter = () => {
     setSelectedProf();
@@ -62,24 +71,7 @@ const UsersList = ({ users: allUsers, ...rest }) => {
         <SearchStatus userCount={usersLength} />
 
         {usersLength > 0 && (
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">Имя</th>
-                <th scope="col">Качества</th>
-                <th scope="col">Профессия</th>
-                <th scope="col">Встретился, раз</th>
-                <th scope="col">Оценка</th>
-                <th scope="col">Избранное</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {usersCrop.map((user) => (
-                <User key={user._id} {...user} {...rest} />
-              ))}
-            </tbody>
-          </table>
+          <UsersTable users={usersCrop} onSort={handleSort} {...rest} />
         )}
 
         <div className="d-flex justify-content-center">
@@ -95,8 +87,8 @@ const UsersList = ({ users: allUsers, ...rest }) => {
   );
 };
 
-UsersList.propTypes = {
+Users.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-export default UsersList;
+export default Users;
