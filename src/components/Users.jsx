@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import _ from 'lodash';
 import api from '../api';
 import SearchStatus from './SearchStatus';
@@ -8,7 +7,7 @@ import UsersTable from './UsersTable';
 import GroupList from './GroupLIst';
 import { paginate } from '../utils/paginate';
 
-const Users = ({ users: allUsers, ...rest }) => {
+const Users = () => {
   const usersOnPage = 8;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,7 +16,25 @@ const Users = ({ users: allUsers, ...rest }) => {
 
   const [selectedProf, setSelectedProf] = useState();
 
-  const [sortBy, setSortBy] = useState[{ iter: 'name', order: 'asc' }];
+  const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' });
+
+  const [users, setUsers] = useState();
+
+  useEffect(() => {
+    api.users.fetchAll().then((data) => setUsers(data));
+  }, []);
+
+  const handleDelete = (userId) => {
+    setUsers(users.filter((user) => user._id !== userId));
+  };
+
+  const handleToggleBookmark = (userId) => {
+    setUsers((prevState) =>
+      prevState.map((user) =>
+        user._id === userId ? { ...user, bookmark: !user.bookmark } : user
+      )
+    );
+  };
 
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProfessions(data));
@@ -36,59 +53,64 @@ const Users = ({ users: allUsers, ...rest }) => {
   };
 
   const handleSort = (item) => {
-    setSortBy({ iter: item, order: 'asc' });
+    setSortBy(item);
   };
 
-  const filteredUsers = selectedProf
-    ? allUsers.filter((user) => user.profession._id === selectedProf._id)
-    : allUsers;
+  if (users) {
+    const filteredUsers = selectedProf
+      ? users.filter((user) => user.profession._id === selectedProf._id)
+      : users;
 
-  const usersLength = filteredUsers.length;
+    const usersLength = filteredUsers.length;
 
-  const sortedUsers = _.orderBy(filteredUsers, [sortBy.iter], [sortBy.order]);
+    const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
 
-  const usersCrop = paginate(sortedUsers, currentPage, usersOnPage);
+    const usersCrop = paginate(sortedUsers, currentPage, usersOnPage);
 
-  const clearFilter = () => {
-    setSelectedProf();
-  };
-
-  return (
-    <div className="d-flex">
-      {professions && (
-        <div className="d-flex flex-column flex-shrink-0 p-3">
-          <GroupList
-            items={professions}
-            onItemSelect={handleProfessionSelect}
-            selectedItem={selectedProf}
-          />
-          <button className="btn btn-secondary mt-2" onClick={clearFilter}>
-            Очистить
-          </button>
-        </div>
-      )}
-      <div className="d-flex flex-column">
-        <SearchStatus userCount={usersLength} />
-
-        {usersLength > 0 && (
-          <UsersTable users={usersCrop} onSort={handleSort} {...rest} />
+    const clearFilter = () => {
+      setSelectedProf();
+    };
+    return (
+      <div className="d-flex">
+        {professions && (
+          <div className="d-flex flex-column flex-shrink-0 p-3">
+            <GroupList
+              items={professions}
+              onItemSelect={handleProfessionSelect}
+              selectedItem={selectedProf}
+            />
+            <button className="btn btn-secondary mt-2" onClick={clearFilter}>
+              Очистить
+            </button>
+          </div>
         )}
+        <div className="d-flex flex-column">
+          <SearchStatus userCount={usersLength} />
 
-        <div className="d-flex justify-content-center">
-          <Pagination
-            itemsCount={usersLength}
-            itemsOnPage={usersOnPage}
-            onPageChange={handlePageChange}
-            currentPage={currentPage}
-          />
+          {usersLength > 0 && (
+            <UsersTable
+              users={usersCrop}
+              onSort={handleSort}
+              selectedSort={sortBy}
+              onDelete={handleDelete}
+              onToggleBookmark={handleToggleBookmark}
+            />
+          )}
+
+          <div className="d-flex justify-content-center">
+            <Pagination
+              itemsCount={usersLength}
+              itemsOnPage={usersOnPage}
+              onPageChange={handlePageChange}
+              currentPage={currentPage}
+            />
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-Users.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.object).isRequired
+    );
+  } else {
+    return 'loading...';
+  }
 };
 
 export default Users;
