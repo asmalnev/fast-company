@@ -16,7 +16,7 @@ const Users = () => {
 
   const [selectedProf, setSelectedProf] = useState();
 
-  const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' });
+  const [sortBy, setSortBy] = useState({ path: 'name', order: 'asc' });
 
   const [users, setUsers] = useState();
 
