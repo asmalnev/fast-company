@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import _ from 'lodash';
-import api from '../api';
-import SearchStatus from './SearchStatus';
-import Pagination from './Pagination';
-import UsersTable from './UsersTable';
-import GroupList from './GroupLIst';
-import { paginate } from '../utils/paginate';
+import React, { useEffect, useState } from "react";
+import _ from "lodash";
+import api from "../api";
+import SearchStatus from "./SearchStatus";
+import Pagination from "./Pagination";
+import UsersTable from "./UsersTable";
+import GroupList from "./GroupLIst";
+import { paginate } from "../utils/paginate";
 
 const Users = () => {
   const usersOnPage = 8;
@@ -16,7 +16,7 @@ const Users = () => {
 
   const [selectedProf, setSelectedProf] = useState();
 
-  const [sortBy, setSortBy] = useState({ path: 'name', order: 'asc' });
+  const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
 
   const [users, setUsers] = useState();
 
@@ -109,7 +109,7 @@ const Users = () => {
       </div>
     );
   } else {
-    return 'loading...';
+    return "loading...";
   }
 };
 

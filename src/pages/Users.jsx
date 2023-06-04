@@ -1,7 +1,7 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import UsersList from '../components/Users';
-import User from './User';
+import React from "react";
+import { useParams } from "react-router-dom";
+import UsersList from "../components/Users";
+import User from "../components/User";
 
 const Users = () => {
   const params = useParams();

@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 const TableHeader = ({ onSort, selectedSort, columns }) => {
   const handleSort = (item) => {
     if (selectedSort.path === item) {
       onSort({
         ...selectedSort,
-        order: selectedSort.order === 'asc' ? 'desc' : 'asc'
+        order: selectedSort.order === "asc" ? "desc" : "asc"
       });
     } else {
-      onSort({ path: item, order: 'asc' });
+      onSort({ path: item, order: "asc" });
     }
   };
 
@@ -23,15 +23,17 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
             key={JSON.stringify(column)}
             onClick={column.path ? () => handleSort(column.path) : undefined}
             scope="col"
-            {...{ role: column.path && 'button' }}
+            {...{ role: column.path && "button" }}
             rel={column.path}
           >
             {column.name}
             {selectedSort.path === column.path && (
               <i
-                className={`bi bi-caret-${
-                  selectedSort.order === 'asc' ? 'up' : 'down'
-                }-fill`}
+                className={
+                  "bi bi-caret" +
+                  (selectedSort.order === "asc" ? "-up" : "-down") +
+                  "-fill"
+                }
               ></i>
             )}
           </th>

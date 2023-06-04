@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import Table from './Table';
-import TableHeader from './TableHeader';
-import TableBody from './TableBody';
-import Bookmark from './Bookmark';
-import QualitiesList from './QualitiesList';
+import React from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import Table from "./Table";
+import TableHeader from "./TableHeader";
+import TableBody from "./TableBody";
+import Bookmark from "./Bookmark";
+import QualitiesList from "./QualitiesList";
 
 const UsersTable = ({
   users,
@@ -16,29 +16,29 @@ const UsersTable = ({
 }) => {
   const columns = {
     name: {
-      path: 'name',
-      name: 'Имя',
+      path: "name",
+      name: "Имя",
       component: (user) => <Link to={`/users/${user._id}`}>{user.name}</Link>
     },
     qualities: {
-      name: 'Качества',
+      name: "Качества",
       component: (user) => <QualitiesList qualities={user.qualities} />
     },
     professions: {
-      path: 'profession.name',
-      name: 'Профессия'
+      path: "profession.name",
+      name: "Профессия"
     },
     completedMeetings: {
-      path: 'completedMeetings',
-      name: 'Встретился, раз'
+      path: "completedMeetings",
+      name: "Встретился, раз"
     },
     rate: {
-      path: 'rate',
-      name: 'Оценка'
+      path: "rate",
+      name: "Оценка"
     },
     bookmark: {
-      path: 'bookmark',
-      name: 'Избранное',
+      path: "bookmark",
+      name: "Избранное",
       component: (user) => (
         <Bookmark
           id={user._id}

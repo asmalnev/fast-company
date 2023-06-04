@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 const GroupItem = ({ item, valueProperty, selectedItem, onItemSelect }) => {
   return (
     <li
-      className={'list-group-item' + (item === selectedItem ? ' active' : '')}
+      className={"list-group-item" + (item === selectedItem ? " active" : "")}
       onClick={() => onItemSelect(item)}
       role="button"
     >

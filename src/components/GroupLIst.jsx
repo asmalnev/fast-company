@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import GroupItem from './GroupItem';
+import React from "react";
+import PropTypes from "prop-types";
+import GroupItem from "./GroupItem";
 
 const GroupList = ({
   items,
@@ -35,8 +35,8 @@ const GroupList = ({
 );
 
 GroupList.defaultProps = {
-  keyProperty: '_id',
-  valueProperty: 'name'
+  keyProperty: "_id",
+  valueProperty: "name"
 };
 
 GroupList.propTypes = {

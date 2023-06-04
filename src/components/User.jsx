@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import api from '../api';
-import QualitiesList from '../components/QualitiesList';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import api from "../api";
+import QualitiesList from "./QualitiesList";
+import { useHistory } from "react-router-dom";
 
 const User = ({ userId }) => {
   const [userInfo, setUserInfo] = useState();
@@ -14,7 +14,7 @@ const User = ({ userId }) => {
   const history = useHistory();
 
   const handleBack = () => {
-    history.push('/users');
+    history.push("/users");
   };
 
   return userInfo ? (
@@ -27,7 +27,7 @@ const User = ({ userId }) => {
       <button onClick={handleBack}>Все пользователи</button>
     </>
   ) : (
-    'loading...'
+    "loading..."
   );
 };
 
