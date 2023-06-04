@@ -50,16 +50,37 @@ const Users = () => {
 
   const handleProfessionSelect = (item) => {
     setSelectedProf(item);
+    setSearch("");
   };
 
   const handleSort = (item) => {
     setSortBy(item);
   };
 
+  const [search, setSearch] = useState("");
+
+  const handleSearch = ({ target }) => {
+    const search = target.value;
+
+    setSearch(search);
+
+    setSelectedProf();
+  };
+
   if (users) {
-    const filteredUsers = selectedProf
-      ? users.filter((user) => user.profession._id === selectedProf._id)
-      : users;
+    let filteredUsers;
+
+    if (search) {
+      filteredUsers = users.filter(
+        (user) => user.name.toLowerCase().indexOf(search) > -1
+      );
+    } else if (selectedProf) {
+      filteredUsers = users.filter(
+        (user) => user.profession._id === selectedProf._id
+      );
+    } else {
+      filteredUsers = users;
+    }
 
     const usersLength = filteredUsers.length;
 
@@ -70,6 +91,7 @@ const Users = () => {
     const clearFilter = () => {
       setSelectedProf();
     };
+
     return (
       <div className="d-flex">
         {professions && (
@@ -86,6 +108,14 @@ const Users = () => {
         )}
         <div className="d-flex flex-column">
           <SearchStatus userCount={usersLength} />
+
+          <input
+            value={search}
+            type="search"
+            placeholder="Search"
+            className="form-control"
+            onChange={handleSearch}
+          />
 
           {usersLength > 0 && (
             <UsersTable
