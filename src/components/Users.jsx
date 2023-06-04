@@ -72,7 +72,7 @@ const Users = () => {
 
     if (search) {
       filteredUsers = users.filter(
-        (user) => user.name.toLowerCase().indexOf(search) > -1
+        (user) => user.name.toLowerCase().indexOf(search.toLowerCase()) > -1
       );
     } else if (selectedProf) {
       filteredUsers = users.filter(
