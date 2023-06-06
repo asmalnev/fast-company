@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import api from "../api";
-import SearchStatus from "./SearchStatus";
-import Pagination from "./Pagination";
-import UsersTable from "./UsersTable";
-import GroupList from "./GroupLIst";
-import { paginate } from "../utils/paginate";
+import api from "../../../api";
+import SearchStatus from "../../ui/SearchStatus";
+import Pagination from "../../common/Pagination";
+import UsersTable from "../../ui/UsersTable";
+import Groups from "../../common/group";
+import { paginate } from "../../../utils/paginate";
 
-const Users = () => {
+const UsersListPage = () => {
   const usersOnPage = 8;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -68,19 +68,13 @@ const Users = () => {
   };
 
   if (users) {
-    let filteredUsers;
-
-    if (search) {
-      filteredUsers = users.filter(
-        (user) => user.name.toLowerCase().indexOf(search.toLowerCase()) > -1
-      );
-    } else if (selectedProf) {
-      filteredUsers = users.filter(
-        (user) => user.profession._id === selectedProf._id
-      );
-    } else {
-      filteredUsers = users;
-    }
+    const filteredUsers = search
+      ? users.filter(
+          (user) => user.name.toLowerCase().indexOf(search.toLowerCase()) > -1
+        )
+      : selectedProf
+      ? users.filter((user) => user.profession._id === selectedProf._id)
+      : users;
 
     const usersLength = filteredUsers.length;
 
@@ -96,7 +90,7 @@ const Users = () => {
       <div className="d-flex">
         {professions && (
           <div className="d-flex flex-column flex-shrink-0 p-3">
-            <GroupList
+            <Groups
               items={professions}
               onItemSelect={handleProfessionSelect}
               selectedItem={selectedProf}
@@ -143,4 +137,4 @@ const Users = () => {
   }
 };
 
-export default Users;
+export default UsersListPage;
