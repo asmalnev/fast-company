@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TextField from "../common/form/TextField";
-import { validator } from "../../utils/validator";
 import CheckBoxField from "../common/form/CheckBoxField";
+import { validator } from "../../utils/validator";
 
 const LoginForm = () => {
   const [data, setData] = useState({ email: "", password: "", stayOn: false });
@@ -57,6 +57,8 @@ const LoginForm = () => {
     const errors = validator(data, validateConfig);
 
     setErrors(errors);
+
+    return Object.keys(errors).length === 0;
   };
 
   const isValid = Object.keys(errors).length === 0;
