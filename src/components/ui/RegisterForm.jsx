@@ -25,19 +25,19 @@ const RegisterForm = () => {
 
   useEffect(() => {
     api.professions.fetchAll().then((data) => {
-      const professionsList = Object.keys(data).map((professionName) => ({
-        label: data[professionName].name,
-        value: data[professionName]._id
+      const professionsList = Object.values(data).map((professionName) => ({
+        label: professionName.name,
+        value: professionName._id
       }));
 
       setProfessions(professionsList);
     });
 
     api.qualities.fetchAll().then((data) => {
-      const qualitiesList = Object.keys(data).map((optionName) => ({
-        label: data[optionName].name,
-        value: data[optionName]._id,
-        color: data[optionName].color
+      const qualitiesList = Object.values(data).map((optionName) => ({
+        label: optionName.name,
+        value: optionName._id,
+        color: optionName.color
       }));
 
       setQualities(qualitiesList);
