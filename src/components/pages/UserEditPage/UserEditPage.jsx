@@ -18,13 +18,6 @@ const UserEditPage = ({ userId }) => {
 
   const [loading, setLoading] = useState(true);
 
-  const handleChange = (target) => {
-    setData((prevState) => ({
-      ...prevState,
-      [target.name]: target.value
-    }));
-  };
-
   const getProfessionById = (id) => {
     for (const prof of professions) {
       if (prof.value === id) {
@@ -47,22 +40,6 @@ const UserEditPage = ({ userId }) => {
       }
     }
     return qualitiesArray;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const isValid = validate();
-
-    if (!isValid) return;
-
-    const { profession, qualities } = data;
-
-    console.log({
-      ...data,
-      profession: getProfessionById(profession),
-      qualities: getQualities(qualities)
-    });
   };
 
   const validateConfig = {
@@ -99,6 +76,29 @@ const UserEditPage = ({ userId }) => {
       value: el._id,
       label: el.name
     }));
+  };
+
+  const handleChange = (target) => {
+    setData((prevState) => ({
+      ...prevState,
+      [target.name]: target.value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const isValid = validate();
+
+    if (!isValid) return;
+
+    const { profession, qualities } = data;
+
+    console.log({
+      ...data,
+      profession: getProfessionById(profession),
+      qualities: getQualities(qualities)
+    });
   };
 
   useEffect(() => {
@@ -144,7 +144,7 @@ const UserEditPage = ({ userId }) => {
     <div className="container mt-5">
       <div className="row">
         <div className="col-md-6 offset-md-3 shadow p-4">
-          {loading ? (
+          {!loading && (
             <form onSubmit={handleSubmit}>
               <TextField
                 label="Имя"
@@ -179,7 +179,6 @@ const UserEditPage = ({ userId }) => {
                 ]}
                 onChange={handleChange}
               />
-
               <MultiSelectField
                 label="Выберите ваши качества"
                 name="qualities"
@@ -195,8 +194,6 @@ const UserEditPage = ({ userId }) => {
                 Submit
               </button>
             </form>
-          ) : (
-            "loading..."
           )}
         </div>
       </div>
