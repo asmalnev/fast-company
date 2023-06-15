@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { validator } from "../../utils/validator";
 import api from "../../api";
+import { validator } from "../../utils/validator";
 import TextField from "../common/form/TextField";
 import SelectField from "../common/form/SelectField";
 import RadioField from "../common/form/RadioField";
@@ -22,27 +22,6 @@ const RegisterForm = () => {
   const [professions, setProfessions] = useState([]);
 
   const [qualities, setQualities] = useState([]);
-
-  useEffect(() => {
-    api.professions.fetchAll().then((data) => {
-      const professionsList = Object.values(data).map((professionName) => ({
-        label: professionName.name,
-        value: professionName._id
-      }));
-
-      setProfessions(professionsList);
-    });
-
-    api.qualities.fetchAll().then((data) => {
-      const qualitiesList = Object.values(data).map((optionName) => ({
-        label: optionName.name,
-        value: optionName._id,
-        color: optionName.color
-      }));
-
-      setQualities(qualitiesList);
-    });
-  }, []);
 
   const handleChange = (target) => {
     setData((prevState) => ({
@@ -135,6 +114,27 @@ const RegisterForm = () => {
   };
 
   const isValid = Object.keys(errors).length === 0;
+
+  useEffect(() => {
+    api.professions.fetchAll().then((data) => {
+      const professionsList = Object.values(data).map((professionName) => ({
+        label: professionName.name,
+        value: professionName._id
+      }));
+
+      setProfessions(professionsList);
+    });
+
+    api.qualities.fetchAll().then((data) => {
+      const qualitiesList = Object.values(data).map((optionName) => ({
+        label: optionName.name,
+        value: optionName._id,
+        color: optionName.color
+      }));
+
+      setQualities(qualitiesList);
+    });
+  }, []);
 
   useEffect(() => {
     validate();

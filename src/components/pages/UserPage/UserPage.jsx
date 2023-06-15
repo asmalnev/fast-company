@@ -24,6 +24,10 @@ const UserPage = ({ userId }) => {
       <QualitiesList qualities={userInfo.qualities} />
       <div>completedMeetings: {userInfo.completedMeetings}</div>
       <h2>Rate: {userInfo.rate}</h2>
+      <button onClick={() => history.push(`/users/${userId}/edit`)}>
+        Редактировать
+      </button>
+      <br />
       <button onClick={handleBack}>Все пользователи</button>
     </>
   ) : (
