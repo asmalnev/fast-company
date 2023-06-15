@@ -135,7 +135,7 @@ const UserEditPage = ({ userId }) => {
   }, [data]);
 
   useEffect(() => {
-    if (qualities.length && professions.length & data._id) {
+    if (qualities.length && professions.length && data._id) {
       setLoading(false);
     }
   }, [qualities, professions, data]);
@@ -144,7 +144,7 @@ const UserEditPage = ({ userId }) => {
     <div className="container mt-5">
       <div className="row">
         <div className="col-md-6 offset-md-3 shadow p-4">
-          {!loading && (
+          {!loading ? (
             <form onSubmit={handleSubmit}>
               <TextField
                 label="Имя"
@@ -194,6 +194,8 @@ const UserEditPage = ({ userId }) => {
                 Submit
               </button>
             </form>
+          ) : (
+            "loading..."
           )}
         </div>
       </div>
