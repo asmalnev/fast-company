@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import api from "../../../api";
 import { validator } from "../../../utils/validator";
@@ -18,9 +19,13 @@ const UserEditPage = ({ userId }) => {
 
   const [loading, setLoading] = useState(true);
 
+  const history = useHistory();
+
   const getProfessionById = (id) => {
     for (const prof of professions) {
       if (prof.value === id) {
+        // при найденном ID
+        // возвращает объет профессий
         return { _id: prof.value, name: prof.label };
       }
     }
@@ -28,6 +33,7 @@ const UserEditPage = ({ userId }) => {
 
   const getQualities = (elements) => {
     const qualitiesArray = [];
+
     for (const elem of elements) {
       for (const quality in qualities) {
         if (elem.value === qualities[quality].value) {
@@ -67,16 +73,18 @@ const UserEditPage = ({ userId }) => {
     const errors = validator(data, validateConfig);
 
     setErrors(errors);
+
+    return Object.keys(errors).length === 0;
   };
 
   const isValid = Object.keys(errors).length === 0;
 
-  const transformData = (data) => {
+  const transformData = (data) =>
+    // формат данных для  multi react-select
     data.map((el) => ({
       value: el._id,
       label: el.name
     }));
-  };
 
   const handleChange = (target) => {
     setData((prevState) => ({
@@ -94,6 +102,17 @@ const UserEditPage = ({ userId }) => {
 
     const { profession, qualities } = data;
 
+    // обновление пользователя
+    api.users
+      .update(userId, {
+        ...data,
+        profession: getProfessionById(profession),
+        qualities: getQualities(qualities)
+      })
+      .then((data) => {
+        history.push(`/users/${data._id}`);
+      });
+
     console.log({
       ...data,
       profession: getProfessionById(profession),
@@ -106,7 +125,7 @@ const UserEditPage = ({ userId }) => {
       setData({
         ...data,
         profession: data.profession._id,
-        qualities: transformData(data.qualities)
+        qualities: transformData(data.qualities) // трансформированные дынные под react-select
       });
     });
 
@@ -134,6 +153,7 @@ const UserEditPage = ({ userId }) => {
     validate();
   }, [data]);
 
+  // отслеживаение данных для отображения формы
   useEffect(() => {
     if (qualities.length && professions.length && data._id) {
       setLoading(false);
