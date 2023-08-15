@@ -7,6 +7,7 @@ import TextField from "../../common/form/TextField";
 import SelectField from "../../common/form/SelectField";
 import MultiSelectField from "../../common/form/MultiSelectField";
 import RadioField from "../../common/form/RadioField";
+import BackButton from "../../common/BackButton";
 
 const UserEditPage = ({ userId }) => {
   const [data, setData] = useState({});
@@ -162,6 +163,8 @@ const UserEditPage = ({ userId }) => {
 
   return (
     <div className="container mt-5">
+      <BackButton />
+
       <div className="row">
         <div className="col-md-6 offset-md-3 shadow p-4">
           {!loading ? (

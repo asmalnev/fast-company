@@ -1,34 +1,32 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import api from "../../../api";
-import QualitiesList from "../../ui/qualities/QualitiesList";
-import { useHistory } from "react-router-dom";
+import UserCard from "../../ui/UserCard";
+import QualitiesCard from "../../ui/QualitiesCard";
+import MeetingsCard from "../../ui/MeetingsCard";
+import Comments from "../../ui/Comments";
 
 const UserPage = ({ userId }) => {
-  const [userInfo, setUserInfo] = useState();
+  const [user, setUser] = useState();
 
   useEffect(() => {
-    api.users.getById(userId).then((data) => setUserInfo(data));
+    api.users.getById(userId).then((data) => setUser(data));
   }, []);
 
-  const history = useHistory();
-
-  const handleBack = () => {
-    history.push("/users");
-  };
-
-  return userInfo ? (
+  return user ? (
     <>
-      <h1>{userInfo.name}</h1>
-      <h2>Профессия: {userInfo.profession.name}</h2>
-      <QualitiesList qualities={userInfo.qualities} />
-      <div>completedMeetings: {userInfo.completedMeetings}</div>
-      <h2>Rate: {userInfo.rate}</h2>
-      <button onClick={() => history.push(`/users/${userId}/edit`)}>
-        Редактировать
-      </button>
-      <br />
-      <button onClick={handleBack}>Все пользователи</button>
+      <div className="container">
+        <div className="row gutters-sm">
+          <div className="col-md-4 mb-3">
+            <UserCard user={user} />
+            <QualitiesCard data={user.qualities} />
+            <MeetingsCard value={user.completedMeetings} />
+          </div>
+          <div className="col-md-8">
+            <Comments />
+          </div>
+        </div>
+      </div>
     </>
   ) : (
     "loading..."
