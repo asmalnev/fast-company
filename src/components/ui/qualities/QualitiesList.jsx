@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { useQualities } from "../../../hooks/useQualities";
 
 const QualitiesList = ({ qualities }) => {
+  console.log(qualities);
+
   const { isLoading } = useQualities();
 
   return (
@@ -16,7 +18,7 @@ const QualitiesList = ({ qualities }) => {
 };
 
 QualitiesList.propTypes = {
-  qualities: PropTypes.arrayOf(PropTypes.object).isRequired
+  qualities: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 export default QualitiesList;
