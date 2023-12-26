@@ -6,43 +6,32 @@ import Pagination from "../../common/Pagination";
 import UsersTable from "../../ui/UsersTable";
 import Groups from "../../common/group";
 import { paginate } from "../../../utils/paginate";
+import { useUsers } from "../../../hooks/useUsers";
 
 const UsersListPage = () => {
   const usersOnPage = 8;
 
+  const { users } = useUsers();
+
   const [currentPage, setCurrentPage] = useState(1);
-
   const [professions, setProfessions] = useState();
-
   const [selectedProf, setSelectedProf] = useState();
-
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
-
-  const [users, setUsers] = useState();
-
-  useEffect(() => {
-    api.users.fetchAll().then((data) => setUsers(data));
-  }, []);
+  const [search, setSearch] = useState("");
 
   const handleDelete = (userId) => {
-    setUsers(users.filter((user) => user._id !== userId));
+    // setUsers(users.filter((user) => user._id !== userId));
+    console.log(userId);
   };
 
   const handleToggleBookmark = (userId) => {
-    setUsers((prevState) =>
+    /* setUsers((prevState) =>
       prevState.map((user) =>
         user._id === userId ? { ...user, bookmark: !user.bookmark } : user
       )
-    );
+    ); */
+    console.log(userId);
   };
-
-  useEffect(() => {
-    api.professions.fetchAll().then((data) => setProfessions(data));
-  }, []);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [selectedProf]);
 
   const handlePageChange = (pageIndex) => {
     setCurrentPage(pageIndex);
@@ -57,8 +46,6 @@ const UsersListPage = () => {
     setSortBy(item);
   };
 
-  const [search, setSearch] = useState("");
-
   const handleSearch = ({ target }) => {
     const search = target.value;
 
@@ -66,6 +53,14 @@ const UsersListPage = () => {
 
     setSelectedProf();
   };
+
+  useEffect(() => {
+    api.professions.fetchAll().then((data) => setProfessions(data));
+  }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedProf]);
 
   if (users) {
     const filteredUsers = search
