@@ -42,7 +42,7 @@ const UsersTable = ({
         <Bookmark
           id={user._id}
           onToggleBookmark={onToggleBookmark}
-          status={user.bookmark}
+          status={Boolean(user.bookmark)}
         />
       )
     },
